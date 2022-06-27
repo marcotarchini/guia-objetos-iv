@@ -67,11 +67,23 @@ public class VideoStore {
     for (int i = 0; i < clientes.length ; i++) {
       if (clientes[i] == null) {
         clientes[i] = cliente;
+        guardaEnArchivo(clientes[i]);
         break;
       }
     }
     return cliente.toString();
   }
+  
+  public void guardaEnArchivo(Cliente clientes){
+    try {
+      BufferedWriter archivo = new BufferedWriter(new FileWriter(new File("clientes.txt")));
+      archivo.write(String.valueOf(clientes));
+      archivo.close();
+    } catch (IOException e) {
+      System.out.println("Se produjo un error al escribir en el archivo: " + e.getMessage());
+    }
+  }
+  
 
   public Alquiler alquilarTitulo(String titulo, String nombreCliente) {
     Film film = buscarFilm(titulo);
